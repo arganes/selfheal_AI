@@ -14,7 +14,8 @@ from app.routes.history import router as history_router
 from app.routes.auto_monitor import router as auto_monitor_router
 from app.routes.dashboard import router as dashboard_router
 from app.services.background_monitor import start_background_monitor
-
+from fastapi.responses import HTMLResponse
+from pathlib import Path
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -39,3 +40,8 @@ app.include_router(dashboard_router)
 @app.get("/")
 def root():
     return {"message": "Self Healing AI is running"}
+
+@app.get("/dashboard-ui", response_class=HTMLResponse)
+def dashboard_ui():
+    html_file = Path("app/templates/dashboard.html")
+    return HTMLResponse(content=html_file.read_text(encoding="utf-8"))

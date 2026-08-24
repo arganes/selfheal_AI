@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Healing AI Dashboard</title>
+</head>
+<body>
+    <h1>Self Healing AI</h1>
+
+    <h2>System Status</h2>
+    <pre id="status">Loading...</pre>
+
+    <h2>Latest Event</h2>
+    <pre id="latest">No events yet</pre>
+
+    <h2>Recent Events</h2>
+    <pre id="history">Loading...</pre>
+
+    <script>
+        async function loadDashboard() {
+            const response = await fetch("/dashboard");
+            const data = await response.json();
+
+            document.getElementById("status").textContent =
+                JSON.stringify(data.current_status, null, 2);
+
+            document.getElementById("latest").textContent =
+                JSON.stringify(data.latest_event, null, 2);
+
+            document.getElementById("history").textContent =
+                JSON.stringify(data.recent_events, null, 2);
+        }
+
+        loadDashboard();
+
+        setInterval(loadDashboard, 5000);
+    </script>
+</body>
+</html>

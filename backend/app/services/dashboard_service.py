@@ -10,5 +10,6 @@ def get_dashboard_summary():
         "system": "Self Healing AI",
         "current_status": system_status,
         "total_events": len(history),
+        "latest_event": history[-1] if history else None,
         "recent_events": history[-5:]
     }

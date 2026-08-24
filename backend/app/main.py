@@ -9,6 +9,7 @@ from app.routes.self_healing import router as self_healing_router
 from app.routes.logs import router as logs_router
 from app.routes.history import router as history_router
 from app.routes.auto_monitor import router as auto_monitor_router
+from app.services.background_monitor import start_background_monitor
 
 app = FastAPI()
 
@@ -22,6 +23,7 @@ app.include_router(self_healing_router)
 app.include_router(logs_router)
 app.include_router(history_router)
 app.include_router(auto_monitor_router)
+start_background_monitor(30)
 
 @app.get("/")
 def root():
